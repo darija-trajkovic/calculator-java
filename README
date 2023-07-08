@@ -1,0 +1,38 @@
+LOC metrika : ukupno 170
+Calculator.java  - LOC 134
+LICENSE- LOC 17
+Start.java  - LOC 19
+
+metoda evaluateExpression 
+
+Ciklomatska složenost = E - N + 2 
+Ciklomatska složenost = 9 - 8 + 2 = 3
+Kognitivna slozenost 3
+
+Metoda Calculate 
+Ciklomatska složenost = 21 - 14 + 2 = 9 
+Kognitivna slozenost 9
+
+Staticka analiza evaluateExpression 
+ln 28 - Metoda evaluateExpression je privatna statička metoda koja prima jedan argument tipa String (expression) i vraća rezultat izraza kao String.
+    1. ln 32-34 Prvi korak je provera da li izraz počinje sa simbolom "+" ili "-". Ako je to slučaj, dodaje se nula na početak izraza. 
+    2. ln 37 Izraz se deli na brojeve koristeći simbole aritmetičkih operacija definisane u klasi Operations. Dobijeni brojevi se cuvaju se u nizu stringova.
+    3. ln 40 46  Zatim se prolazi kroz izraz kako bi se izdvojile sve operacije i sačuvale u listu stringova operationList.
+    4. Sledi prolazak kroz niz stringova numbers kako bi se parsirali brojevi i sačuvali u listu float brojeva numberList. Ako se naiđe na posebne vrijednosti poput "-Infinity" ili "Infinity", odgovarajuće vrijednosti se dodaju na listu. Ako broj nije moguće parsirati kao float, vraća se "ERROR".
+    5. Poziva se metoda Calculate sa listama numberList i operationList. Vjerojatno se očekuje da će ta metoda izračunati konačni rezultat izraza.
+    6. Na kraju, konačni rezultat se pretvara u string i vraća kao rezultat metode evaluateExpression.
+
+Staticka analiza Calculate 
+Ovaj kod izgleda kao Java kod koji vrši kalkulacije nad listama brojeva i operacija kako bi dobio konačni rezultat izraza. Evo statičke analize datog koda:
+    1. Metoda Calculate je privatna statička metoda koja prima dvije liste: numbers (List<Float>) koja sadrži brojeve i operations (List<String>) koja sadrži operacije.
+    2. Ako je veličina liste numbers jednaka 1, tada se postavlja finalResult na jedini broj u listi i izlazi se iz metode.
+    3. Inače, deklarira se varijabla result koja će se koristiti za pohranu međurezultata.
+    4. Zatim se traže indeksi za simbole množenja i dijeljenja u listi operations koristeći metodu indexOf. Ako su oba simbola prisutna, provjerava se koji se pojavljuje prvi.
+    5. Ako je simbol množenja prvi, izračunava se rezultat množenja dva broja na odgovarajućim indeksima u listi numbers. Tako dobiveni rezultat se postavlja na mjesto prvog broja, a drugi broj se uklanja iz liste numbers. Odgovarajuća operacija se uklanja iz liste operations. Nakon toga se ponovno poziva metoda Calculate sa ažuriranim listama.
+    6. Ako je simbol dijeljenja prvi, slično kao kod množenja, izračunava se rezultat dijeljenja dva broja, a zatim se ažuriraju liste numbers i operations.
+    7. Ako samo simbol množenja ili dijeljenja postoji, primjenjuje se isti postupak kao u koraku 5 ili 6, ovisno o simbolu.
+    8. Nakon toga se traže indeksi za simbole zbrajanja i oduzimanja u listi operations. Ako su oba simbola prisutna, provjerava se koji se pojavljuje prvi.
+    9. Ako je simbol zbrajanja prvi, izračunava se rezultat zbrajanja dva broja, a zatim se ažuriraju liste numbers i operations.
+    10. Ako je simbol oduzimanja prvi, slično kao kod zbrajanja, izračunava se rezultat oduzimanja dva broja, a zatim se ažuriraju liste numbers i operations.
+    11. Ako samo simbol zbrajanja ili oduzimanja postoji, primjenjuje se isti postupak kao u koraku 9 ili 10, ovisno o simbolu.
+    12. Ovaj korak se ponavlja sve dok se ne izvrše sve operacije u listi operations.
