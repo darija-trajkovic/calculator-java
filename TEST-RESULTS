@@ -1,1 +1,49 @@
 
+Za testiranje ovog kalkulatora, možemo se usmeriti na različite tipove ulaznih podataka i očekivanih izlaza. Evo nekoliko primera scenarija za sistemsko testiranje:
+    1. Testiranje osnovnih aritmetičkih operacija: PASSED
+        ◦ Ulaz: "2+3*4-6/2"
+        • Očekivani izlaz: "11.0"
+        • Dobijeni rezultat : “11.0” 
+
+    2. Testiranje deljenja nulom:PASSED
+        ◦ Ulaz: "5/0"
+        ◦ Očekivani izlaz: "Infinity"
+        ◦ Dobijeni izlaz : “Infinity”
+
+    3. Testiranje negativnih brojeva:FAILED
+        ◦ Ulaz: "-2*-3"
+        ◦ Očekivani izlaz: "6.0"
+        ◦ Dobijeni izlaz : “ERROR”
+
+    4. Testiranje unosa stringa:PASSED
+        ◦ Ulaz: "aaa"
+        ◦ Očekivani izlaz: "ERROR"
+        ◦ Dobijeni izlaz : “ERROR”
+
+    5. Testiranje praznog izraza:FAILED
+        ◦ Ulaz: ""
+        ◦ Očekivani izlaz: "ERROR"
+        ◦ Dobijeni izlaz : APP CRASHED
+
+    6. Testiranje izraza sa samo jednim brojem:PASSED
+        ◦ Ulaz: "7"
+        ◦ Očekivani izlaz: "7.0"
+          Dobijeni izlaz : “7.0”
+Sa obzirom na velike greske pri izvrsavanju code-a, mozemo slobodno reci da ovaj kalkulator nije prosao test prihvatljivosti.
+
+Primer unit testa :
+import Calculator;
+
+def test_calculate_expression():
+    expression = "5+3*2"
+    expected_result = "11.0"
+
+    actual_result = Calculator.Run(expression)
+
+    if expected_result == actual_result:
+        print("Test succeeded.")
+    else:
+        print("Test failed for expression:", expression)
+
+ Pokretanje jediničnog testa
+test_calculate_expression()
