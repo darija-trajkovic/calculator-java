@@ -1,38 +1,58 @@
-LOC metrika : ukupno 170
 Calculator.java  - LOC 134
-LICENSE- LOC 17
+LICENSE  - LOC 17
 Start.java  - LOC 19
 
-metoda evaluateExpression 
+LOC za ceo projekat 170
+
+Metoda : evaluateExpression 
 
 Ciklomatska složenost = E - N + 2 
-Ciklomatska složenost = 9 - 8 + 2 = 3
+Ciklomatska složenost = 18 - 14 + 2 = 6
 Kognitivna slozenost 3
 
 Metoda Calculate 
+
 Ciklomatska složenost = 21 - 14 + 2 = 9 
 Kognitivna slozenost 9
 
 Staticka analiza evaluateExpression 
-ln 28 - Metoda evaluateExpression je privatna statička metoda koja prima jedan argument tipa String (expression) i vraća rezultat izraza kao String.
-    1. ln 32-34 Prvi korak je provera da li izraz počinje sa simbolom "+" ili "-". Ako je to slučaj, dodaje se nula na početak izraza. 
-    2. ln 37 Izraz se deli na brojeve koristeći simbole aritmetičkih operacija definisane u klasi Operations. Dobijeni brojevi se cuvaju se u nizu stringova.
-    3. ln 40 46  Zatim se prolazi kroz izraz kako bi se izdvojile sve operacije i sačuvale u listu stringova operationList.
-    4. Sledi prolazak kroz niz stringova numbers kako bi se parsirali brojevi i sačuvali u listu float brojeva numberList. Ako se naiđe na posebne vrijednosti poput "-Infinity" ili "Infinity", odgovarajuće vrijednosti se dodaju na listu. Ako broj nije moguće parsirati kao float, vraća se "ERROR".
-    5. Poziva se metoda Calculate sa listama numberList i operationList. Vjerojatno se očekuje da će ta metoda izračunati konačni rezultat izraza.
+
+Metoda evaluateExpression je privatna statička metoda koja prima jedan argument tipa String (expression) i vraća rezultat izraza kao String.
+    1. Prvi korak je proveera da li izraz počinje sa simbolom "+" ili "-". Ako je to slučaj, dodaje se nula na početak izraza. Ovaj korak je namenjen da olakša dalje parsiranje izraza.
+    2. Izraz se deli na brojeve koristeći simbole aritmetičkih operacija definisane u klasi Operations. Dobijeni brojevi se snimaju u niz stringova.
+    3. Zatim se prolazi kroz izraz kako bi se izdvojile sve operacije i sa u listu stringova operationList. Operacije se prepoznaju na osnovu simbola definisanih u klasi Operations.
+    4. Sledi prolazak kroz niz stringova numbers kako bi se parsirali brojevi i sačuvali u listu float brojeva numberList. Ako se naiđe na posebne vrednosti poput "-Infinity" ili "Infinity", odgovarajuće vrednosti se dodaju na listu. Ako broj nije moguće parsirati kao float, vraća se "ERROR".
+    5. Poziva se metoda Calculate sa listama numberList i operationList.  Očekuje da će ta metoda izračunati konačni rezultat izraza.
     6. Na kraju, konačni rezultat se pretvara u string i vraća kao rezultat metode evaluateExpression.
 
+Evo nekoliko nedoslednosti, propusta i sumnjivih delova koda (Code Smells) koje sam primetila u datom kodu:
+    1. Nedostatak definicije klase Operations: U kodu se koriste simboli operacija (ADDITION_SYMBOL, SUBTRACTION_SYMBOL, MULTIPLICATION_SYMBOL, DIVISION_SYMBOL) koji su definisani u klasi Operations. Međutim, u kodu koji ste pružili, nije prikazana definicija ove klase. Da bi kod bio potpuno funkcionalan, potrebno je da klasa Operations bude adekvatno definisana sa potrebnim simbolima operacija.
+    2. Manipulacija izražajem kao stringom: Kod se bazira na manipulaciji izraza kao stringom, što može biti složeno, osetljivo na greške i manje efikasno od drugih metoda parsiranja. Preporučljivo je razmotriti korišćenje drugih metoda parsiranja izraza ili korišćenja postojećih biblioteka za evaluaciju matematičkih izraza.
+    3. Nedostatak validacije izraza: Kod ne sadrži validaciju izraza pre evaluacije. To znači da bi se kod mogao izvršiti čak i sa neispravnim ili nevalidnim izrazima, što može dovesti do neispravnih rezultata ili neočekivanih grešaka. Preporučljivo je implementirati dodatnu logiku za proveru ispravnosti izraza pre evaluacije.
+    4. Korišćenje izuzetaka za kontrolu toka programa: Metoda parseFloat koristi try-catch blok kako bi hvatala izuzetke i vratila "ERROR" u slučaju neuspelog parsiranja broja. Međutim, korišćenje izuzetaka za kontrolu toka programa smatra se lošom praksom. Umesto toga, preporučljivo je koristiti logičke provere i povratne vrednosti za obradu grešaka.
+
 Staticka analiza Calculate 
+
 Ovaj kod izgleda kao Java kod koji vrši kalkulacije nad listama brojeva i operacija kako bi dobio konačni rezultat izraza. Evo statičke analize datog koda:
-    1. Metoda Calculate je privatna statička metoda koja prima dvije liste: numbers (List<Float>) koja sadrži brojeve i operations (List<String>) koja sadrži operacije.
+    1. Metoda Calculate je privatna statička metoda koja prima dve liste: numbers (List<Float>) koja sadrži brojeve i operations (List<String>) koja sadrži operacije.
     2. Ako je veličina liste numbers jednaka 1, tada se postavlja finalResult na jedini broj u listi i izlazi se iz metode.
-    3. Inače, deklarira se varijabla result koja će se koristiti za pohranu međurezultata.
-    4. Zatim se traže indeksi za simbole množenja i dijeljenja u listi operations koristeći metodu indexOf. Ako su oba simbola prisutna, provjerava se koji se pojavljuje prvi.
-    5. Ako je simbol množenja prvi, izračunava se rezultat množenja dva broja na odgovarajućim indeksima u listi numbers. Tako dobiveni rezultat se postavlja na mjesto prvog broja, a drugi broj se uklanja iz liste numbers. Odgovarajuća operacija se uklanja iz liste operations. Nakon toga se ponovno poziva metoda Calculate sa ažuriranim listama.
-    6. Ako je simbol dijeljenja prvi, slično kao kod množenja, izračunava se rezultat dijeljenja dva broja, a zatim se ažuriraju liste numbers i operations.
-    7. Ako samo simbol množenja ili dijeljenja postoji, primjenjuje se isti postupak kao u koraku 5 ili 6, ovisno o simbolu.
-    8. Nakon toga se traže indeksi za simbole zbrajanja i oduzimanja u listi operations. Ako su oba simbola prisutna, provjerava se koji se pojavljuje prvi.
-    9. Ako je simbol zbrajanja prvi, izračunava se rezultat zbrajanja dva broja, a zatim se ažuriraju liste numbers i operations.
-    10. Ako je simbol oduzimanja prvi, slično kao kod zbrajanja, izračunava se rezultat oduzimanja dva broja, a zatim se ažuriraju liste numbers i operations.
-    11. Ako samo simbol zbrajanja ili oduzimanja postoji, primjenjuje se isti postupak kao u koraku 9 ili 10, ovisno o simbolu.
+    3. Inače, deklariše se varijabla result koja će se koristiti za snimanje međurezultata.
+    4. Zatim se traže indeksi za simbole množenja i deljenja u listi operations koristeći metodu indexOf. Ako su oba simbola prisutna, proverava se koji se pojavljuje prvi.
+    5. Ako je simbol množenja prvi, izračunava se rezultat množenja dva broja na odgovarajućim indeksima u listi numbers. Tako dobiveni rezultat se postavlja na mesto prvog broja, a drugi broj se uklanja iz liste numbers. Odgovarajuća operacija se uklanja iz liste operations. Nakon toga se ponovno poziva metoda Calculate sa ažuriranim listama.
+    6. Ako je simbol deljenja prvi, slično kao kod množenja, izračunava se rezultat deljenja dva broja, a zatim se ažuriraju liste numbers i operations.
+    7. Ako samo simbol množenja ili deljenja postoji, primjenjuje se isti postupak kao u koraku 5 ili 6, zavisno o simbolu.
+    8. Nakon toga se traže indeksi za simbole sabiranja i oduzimanja u listi operations. Ako su oba simbola prisutna, proverava se koji se pojavljuje prvi.
+    9. Ako je simbol  sabiranja prvi, izračunava se rezultat sabiranja dva broja, a zatim se ažuriraju liste numbers i operations.
+    10. Ako je simbol oduzimanja prvi, slično kao kod sabiranja, izračunava se rezultat oduzimanja dva broja, a zatim se ažuriraju liste numbers i operations.
+    11. Ako samo simbol sabiranja ili oduzimanja postoji, primjenjuje se isti postupak kao u koraku 9 ili 10.
     12. Ovaj korak se ponavlja sve dok se ne izvrše sve operacije u listi operations.
+
+Nekoliko potencijalnih nedoslednosti, propusta i sumnjivih delova koda (Code Smells) koje sam primetila:
+
+    1. Nepostojanje povratnog tipa metode Calculate: Metoda Calculate nema definisan povratni tip. Obično je dobra praksa eksplicitno definisati povratni tip metode radi jasnoće i razumljivosti koda. U ovom slučaju, možda bi trebalo da bude void jer se ne vraća nikakva vrednost.
+    2. Dugačka metoda Calculate: Metoda Calculate je prilično dugačka i sadrži mnogo ponavljajućeg koda. Ovo može otežati razumevanje i održavanje koda. Možda biste trebali razmotriti da je razbijete na manje metode koje obavljaju specifične zadatke, kako biste poboljšali čitljivost i modularnost.
+    3. Korišćenje rekuzivnog poziva: Metoda Calculate se poziva rekuzivno unutar sebe, što može dovesti do potencijalnih problema sa performansama i mogućnosti prekoračenja steka (stack overflow) za velike ulazne vrednosti. Trebali biste proveriti i ograničiti dubinu rekuzivnih poziva ili razmotriti iterativno rešenje umesto rekuzivnog.
+    4. Manipulacija liste numbers i operations: Postoje ponavljajući delovi koda za manipulaciju listama numbers i operations, gde se elementi uklanjaju, a novi rezultati se dodaju. Ovo može biti podložno greškama i može dovesti do narušavanja integriteta liste. Možda biste trebali razmotriti korišćenje strukture podataka koja je bolje prilagođena ovakvim manipulacijama, kao što je stek (stack) ili red (queue).
+    5. Nepotpuna definicija simbola operacija: U kodu se koriste simboli operacija (ADDITION_SYMBOL, SUBTRACTION_SYMBOL, itd.), ali njihova definicija nije prikazana. Trebali biste proveriti da li su ove vrednosti ispravno definisane ili da su dostupne u sklopu vašeg koda.
+
+       
